@@ -4,6 +4,7 @@ import { getCharacters } from "../services";
 import { FlashList } from "@shopify/flash-list";
 import * as SplashScreen from "expo-splash-screen";
 import CharacterItem from "../components/CharacterItem";
+import store from "../context/store";
 
 export interface People {
     birth_year: string;
@@ -33,6 +34,11 @@ const CharactersScreen: React.FC = () => {
 
     useEffect(() => {
         getData();
+        const storeSubscription = store.subscribe(() =>
+            console.log("store changed")
+        );
+
+        return () => storeSubscription();
     }, []);
 
     return (
