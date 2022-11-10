@@ -11,6 +11,10 @@ import { INITIAL_ROUTE } from "../constants";
 
 const Drawer = createDrawerNavigator();
 
+/**
+ * Drawer configuration options.
+ * Custom header and drawer options are added here.
+ */
 const screenOptions: DrawerNavigationOptions = {
     header: (props) => {
         return <CustomHeader drawerData={props} />;
@@ -23,6 +27,10 @@ const screenOptions: DrawerNavigationOptions = {
     drawerType: "back",
 };
 
+/**
+ * Drawer navigator for the app.
+ * Wraps the screens, and provides a custom(behavior & style) header and drawer.
+ */
 const DrawerNavigator = () => {
     return (
         <Drawer.Navigator

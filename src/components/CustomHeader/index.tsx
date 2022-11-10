@@ -8,6 +8,11 @@ interface CustomHeaderProps {
     drawerData: DrawerHeaderProps;
 }
 
+/**
+ * Custom header for the drawer, used in screenOptions (DrawerNavigator).
+ * @param {DrawerHeaderProps} drawerData - Drawer header props
+ * @returns {JSX.Element}
+ */
 const CustomHeader: React.FC<CustomHeaderProps> = ({ drawerData }) => {
     const toggleDrawer = () => {
         drawerData.navigation.toggleDrawer();
