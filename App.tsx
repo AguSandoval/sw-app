@@ -5,6 +5,8 @@ import "react-native-gesture-handler";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
 import * as SplashScreen from "expo-splash-screen";
+import { Provider } from "react-redux";
+import store from "./src/redux/store";
 
 export default function App() {
     const [fontsLoaded] = useFonts({
@@ -19,6 +21,10 @@ export default function App() {
         "Urbanist-Thin": require("./assets/fonts/Urbanist-Thin.ttf"),
     });
 
+    /** Will trigger the SplashScreen at app launch
+     * Which will be hidden when the fonts are loaded
+     * and the first screen is rendered (CharactersScreen).
+     */
     useEffect(() => {
         async function prepare() {
             await SplashScreen.preventAutoHideAsync();
@@ -31,9 +37,11 @@ export default function App() {
     }
 
     return (
-        <NativeBaseProvider>
-            <StatusBar style="light" />
-            <NavigationProvider />
-        </NativeBaseProvider>
+        <Provider store={store}>
+            <NativeBaseProvider>
+                <StatusBar style="light" />
+                <NavigationProvider />
+            </NativeBaseProvider>
+        </Provider>
     );
 }
