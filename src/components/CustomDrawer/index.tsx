@@ -13,6 +13,11 @@ interface CustomDrawerProps {
     drawerData: DrawerContentComponentProps;
 }
 
+/**
+ * Custom drawer component, used as prop for DrawerNavigator (drawerContent).
+ * @param {DrawerContentComponentProps} drawerData - Drawer content props
+ * @returns {JSX.Element}
+ */
 const CustomDrawer: React.FC<CustomDrawerProps> = ({ drawerData }) => {
     return (
         <Box bgColor="#17141F" w="100%" h="100%">
