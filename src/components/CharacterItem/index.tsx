@@ -1,7 +1,12 @@
 import { AntDesign } from "@expo/vector-icons";
 import { Button, HStack, Text, VStack } from "native-base";
 import React, { useEffect } from "react";
-import store, { addFavorite, removeFavorite } from "../../context/store";
+import { useDispatch, useSelector } from "react-redux";
+import store, {
+    addFavorite,
+    removeFavorite,
+    RootState,
+} from "../../redux/store";
 import { People } from "../../screen/CharactersScreen";
 import { getPlanet } from "../../services";
 import fontSelector from "../../styles/fontSelector";
@@ -19,9 +24,11 @@ interface CharacterItemProps {
  */
 const CharacterItem: React.FC<CharacterItemProps> = ({ character }) => {
     const [planet, setPlanet] = React.useState("");
-    const [isFavorite, setIsFavorite] = React.useState(
-        !!store.getState().value.find((item) => item.name === character.name)
+    const isFavorite = useSelector((state: RootState) =>
+        state.value.find((item) => item.name === character.name)
     );
+    const dispatch = useDispatch();
+
     const getPlanetData = async (planetUrl: string) => {
         const { data } = await getPlanet(planetUrl);
         setPlanet(data.name);
@@ -29,25 +36,14 @@ const CharacterItem: React.FC<CharacterItemProps> = ({ character }) => {
 
     useEffect(() => {
         getPlanetData(character.homeworld);
-        const storeSubscription = store.subscribe(() => {
-            setIsFavorite(
-                !!store
-                    .getState()
-                    .value.find((item) => item.name === character.name)
-            );
-        });
-
-        return () => storeSubscription();
     }, [character.homeworld]);
 
     const toggleFavorite = (character: People) => {
         if (!isFavorite) {
-            store.dispatch(addFavorite(character));
-            setIsFavorite(true);
+            dispatch(addFavorite(character));
             return;
         }
-        store.dispatch(removeFavorite(character));
-        setIsFavorite(false);
+        dispatch(removeFavorite(character));
     };
 
     return (

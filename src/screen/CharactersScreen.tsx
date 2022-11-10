@@ -4,8 +4,11 @@ import { getCharacters } from "../services";
 import { FlashList } from "@shopify/flash-list";
 import * as SplashScreen from "expo-splash-screen";
 import CharacterItem from "../components/CharacterItem";
-import store from "../context/store";
 
+/**
+ * Interface for the character object.
+ * Obtained from the API Typescript repo.
+ */
 export interface People {
     birth_year: string;
     eye_color: string;
@@ -22,6 +25,10 @@ export interface People {
     vehicles: any;
 }
 
+/**
+ * This screen renders a list of characters from the Star Wars universe.
+ * Data is fetched from the Star Wars API.
+ */
 const CharactersScreen: React.FC = () => {
     const [characters, setCharacters] = React.useState([] as People[]);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -34,11 +41,6 @@ const CharactersScreen: React.FC = () => {
 
     useEffect(() => {
         getData();
-        const storeSubscription = store.subscribe(() =>
-            console.log("store changed")
-        );
-
-        return () => storeSubscription();
     }, []);
 
     return (
@@ -54,7 +56,7 @@ const CharactersScreen: React.FC = () => {
                 renderItem={({ item }) => <CharacterItem character={item} />}
                 estimatedItemSize={20}
                 refreshing={isLoading}
-                onRefresh={() => null}
+                onRefresh={() => getData()}
             />
         </Box>
     );
