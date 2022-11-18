@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Box, Input, Text, VStack } from "native-base";
 import { FlashList } from "@shopify/flash-list";
-import store, { RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 import CharacterItem from "../components/CharacterItem";
 import fontSelector from "../styles/fontSelector";
 import { useSelector } from "react-redux";
@@ -60,7 +60,7 @@ const FavoritesScreen: React.FC = () => {
                 />
             </VStack>
         );
-    }, []);
+    }, [favorites.length]);
 
     return (
         <Box bgColor="#17141F" flex={1} px={5}>
